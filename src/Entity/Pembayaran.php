@@ -22,7 +22,7 @@ class Pembayaran
     #[ORM\Column(name: 'jumlah', type: 'decimal', precision: 14, scale: 2)]
     private string $jumlah;
 
-    #[ORM\Column(name: 'metode', type: 'string')]
+    #[ORM\Column(name: 'metode_pembayaran', type: 'string')]
     private string $metode;
 
     #[ORM\Column(name: 'status', type: 'string')]
@@ -48,7 +48,7 @@ class Pembayaran
             'id_transaksi'  => $this->transaksi->getId(),
             'tanggal_bayar' => $this->tanggalBayar->format('Y-m-d'),
             'jumlah'        => (float) $this->jumlah,
-            'metode'        => $this->metode,
+            'metode_pembayaran'        => $this->metode,
             'status'        => $this->status,
         ];
     }
