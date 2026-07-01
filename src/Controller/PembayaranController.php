@@ -48,8 +48,7 @@
                 $pembayaran->setMetode($item['metode_pembayaran']);
                 $pembayaran->setStatus('lunas');
 
-                $transaksi->setStatus('selesai');
-                $transaksi->getKendaraan()->setStatus('tersedia');
+                $transaksi->setStatus('menunggu_pengembalian');
 
                 $this->em->persist($pembayaran);
                 $entities[] = $pembayaran;

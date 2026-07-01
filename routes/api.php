@@ -3,6 +3,7 @@
 use App\Controller\PembayaranController;
 use App\Controller\KendaraanController;
 use App\Controller\PelangganController;
+use App\Controller\PengembalianController;
 use App\Controller\TransaksiController;
 use App\Controller\UserController;
 use Doctrine\ORM\EntityManager;
@@ -108,6 +109,20 @@ function route(string $method, string $path, EntityManager $em): void
         (new TransaksiController($em))->update((int) $m[1]);
         return;
     }
+    if (($method === 'POST' || $method === 'PUT') && preg_match('#^/api/transaksi/(\d+)/kembalikan$#', $path, $m)) {
+        (new TransaksiController($em))->returnVehicle((int) $m[1]);
+        return;
+    }
+
+    // ─── Pengembalian ────────────────────────────────────────────────────
+    if ($method === 'GET' && $path === '/api/pengembalian') {
+        (new PengembalianController($em))->index();
+        return;
+    }
+    if ($method === 'POST' && $path === '/api/pengembalian') {
+        (new PengembalianController($em))->store();
+        return;
+    }
 
     // ─── Pembayaran ──────────────────────────────────────────────────────
     if ($method === 'GET' && $path === '/api/pembayaran') {
@@ -130,3 +145,4 @@ function route(string $method, string $path, EntityManager $em): void
         'message' => "Route '{$method} {$path}' tidak ditemukan.",
     ]);
 }
+?>
