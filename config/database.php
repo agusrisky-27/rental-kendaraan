@@ -1,7 +1,7 @@
 <?php
 
-use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -21,12 +21,15 @@ function getEM(): EntityManager
         $proxyDir
     );
 
-    return EntityManager::create([
-        'driver'   => 'pdo_mysql',
-        'host'     => 'localhost',
-        'dbname'   => 'rental_kendaraan',
-        'user'     => 'root',
-        'password' => '',
-        'charset'  => 'utf8mb4',
-    ], $config);
+    return EntityManager::create(
+        [
+            'driver' => 'pdo_mysql',
+            'host' => 'localhost',
+            'dbname' => 'rental_kendaraan',
+            'user' => 'root',
+            'password' => '',
+            'charset' => 'utf8mb4',
+        ],
+        $config
+    );
 }

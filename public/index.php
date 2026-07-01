@@ -8,14 +8,17 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(200); exit; }
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
 
-$em     = getEM();
+$em = getEM();
 $method = $_SERVER['REQUEST_METHOD'];
 
 // Strip subfolder prefix, ambil hanya bagian /api/...
 $fullPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$apiPos   = strpos($fullPath, '/api');
-$path     = $apiPos !== false ? substr($fullPath, $apiPos) : $fullPath;
+$apiPos = strpos($fullPath, '/api');
+$path = $apiPos !== false ? substr($fullPath, $apiPos) : $fullPath;
 
 route($method, $path, $em);
