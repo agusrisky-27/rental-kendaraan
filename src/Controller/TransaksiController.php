@@ -6,8 +6,8 @@
     use App\Entity\Transaksi;
     use App\Entity\User;
 
-    class TransaksiController extends BaseController{
-        public function index(): void{
+    class TransaksiController extends BaseController {
+        public function index(): void {
             $this->auth();
             $data = array_map(
                 fn ($transaksi) => $transaksi->toArray(),
@@ -16,13 +16,13 @@
             $this->ok($data);
         }
 
-        public function show(int $id): void{
+        public function show(int $id): void {
             $this->auth();
             $transaksi = $this->em->find(Transaksi::class, $id) ?? $this->fail('Tidak ditemukan', 404);
             $this->ok($transaksi->toArray());
         }
 
-        public function store(): void{
+        public function store(): void {
             $payload = $this->auth();
 
             $b = $this->body();
@@ -73,7 +73,7 @@
             $this->ok($result, count($result) . ' transaksi dibuat', 201);
         }
 
-        public function update(int $id): void{
+        public function update(int $id): void {
             $this->auth();
             $transaksi = $this->em->find(Transaksi::class, $id) ?? $this->fail('Tidak ditemukan', 404);
             $b = $this->body();
@@ -91,7 +91,7 @@
             $this->ok($transaksi->toArray(), 'Transaksi diupdate');
         }
 
-        public function delete(int $id): void{
+        public function delete(int $id): void {
             $this->auth();
             $transaksi = $this->em->find(Transaksi::class, $id) ?? $this->fail('Tidak ditemukan', 404);
 
@@ -101,7 +101,7 @@
             $this->ok(null, 'Transaksi dihapus');
         }
 
-        public function returnVehicle(int $id): void{
+        public function returnVehicle(int $id): void {
             $this->auth();
             $transaksi = $this->em->find(Transaksi::class, $id) ?? $this->fail('Tidak ditemukan', 404);
 

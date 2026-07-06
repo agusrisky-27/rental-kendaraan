@@ -5,17 +5,14 @@
     use Firebase\JWT\JWT;
     use Firebase\JWT\Key;
 
-    class BaseController
-    {
+    class BaseController {
         protected EntityManager $em;
 
-        public function __construct(EntityManager $em)
-        {
+        public function __construct(EntityManager $em) {
             $this->em = $em;
         }
 
-        protected function body(): array
-        {
+        protected function body(): array {
             $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
 
             if (
@@ -29,8 +26,7 @@
             return $rawBody === false ? [] : (json_decode($rawBody, true) ?? []);
         }
 
-        protected function ok(mixed $data, string $msg = 'Berhasil', int $code = 200): never
-        {
+        protected function ok(mixed $data, string $msg = 'Berhasil', int $code = 200): never {
             http_response_code($code);
             echo json_encode([
                 'success' => true,
@@ -40,8 +36,7 @@
             exit;
         }
 
-        protected function fail(string $msg, int $code = 400): never
-        {
+        protected function fail(string $msg, int $code = 400): never {
             http_response_code($code);
             echo json_encode([
                 'success' => false,
@@ -50,8 +45,7 @@
             exit;
         }
 
-        protected function auth(): array
-        {
+        protected function auth(): array {
             $header = getallheaders()['Authorization'] ?? '';
             if (!str_starts_with($header, 'Bearer ')) {
                 $this->fail('Token tidak ada', 401);
@@ -64,13 +58,11 @@
             }
         }
 
-        protected function adminOnly(): array
-        {
+        protected function adminOnly(): array {
             $payload = $this->auth();
             if ($payload['role'] !== 'admin') {
                 $this->fail('Hanya admin', 403);
             }
-
             return $payload;
         }
     }

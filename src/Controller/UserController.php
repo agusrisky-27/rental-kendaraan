@@ -4,10 +4,8 @@
     use App\Entity\User;
     use Firebase\JWT\JWT;
 
-    class UserController extends BaseController
-    {
-        public function register(): void
-        {
+    class UserController extends BaseController {
+        public function register(): void {
             $b = $this->body();
             $repo = $this->em->getRepository(User::class);
             if ($repo->findOneBy(['email' => $b['email']])) {
@@ -25,8 +23,7 @@
             $this->ok($user->toArray(), 'Register berhasil', 201);
         }
 
-        public function login(): void
-        {
+        public function login(): void {
             $b = $this->body();
             $user = $this->em->getRepository(User::class)->findOneBy(['email' => $b['email']]);
             if (!$user || !password_verify($b['password'], $user->getPassword())) {
@@ -47,8 +44,7 @@
             $this->ok(['token' => $token, 'user' => $user->toArray()], 'Login berhasil');
         }
 
-        public function index(): void
-        {
+        public function index(): void {
             $this->adminOnly();
             $users = array_map(
                 fn ($user) => $user->toArray(),
@@ -57,15 +53,13 @@
             $this->ok($users);
         }
 
-        public function show(int $id): void
-        {
+        public function show(int $id): void {
             $this->adminOnly();
             $user = $this->em->find(User::class, $id) ?? $this->fail('Tidak ditemukan', 404);
             $this->ok($user->toArray());
         }
 
-        public function update(int $id): void
-        {
+        public function update(int $id): void {
             $this->adminOnly();
             $user = $this->em->find(User::class, $id) ?? $this->fail('Tidak ditemukan', 404);
             $b = $this->body();
@@ -91,8 +85,7 @@
             $this->ok($user->toArray(), 'User diupdate');
         }
 
-        public function delete(int $id): void
-        {
+        public function delete(int $id): void {
             $this->adminOnly();
             $user = $this->em->find(User::class, $id) ?? $this->fail('Tidak ditemukan', 404);
             $this->em->remove($user);

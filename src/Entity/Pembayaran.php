@@ -5,8 +5,7 @@
 
     #[ORM\Entity]
     #[ORM\Table(name: 'pembayaran')]
-    class Pembayaran
-    {
+    class Pembayaran {
         #[ORM\Id]
         #[ORM\GeneratedValue]
         #[ORM\Column(name: 'id_pembayaran', type: 'integer')]
@@ -28,28 +27,49 @@
         #[ORM\Column(name: 'status', type: 'string')]
         private string $status = 'lunas';
 
-        public function getId(): ?int              { return $this->id; }
-        public function getTransaksi(): Transaksi  { return $this->transaksi; }
-        public function getTanggalBayar(): \DateTime { return $this->tanggalBayar; }
-        public function getJumlah(): string        { return $this->jumlah; }
-        public function getMetode(): string        { return $this->metode; }
-        public function getStatus(): string        { return $this->status; }
+        public function getId(): ?int { 
+            return $this->id; 
+        }
+        public function getTransaksi(): Transaksi { 
+            return $this->transaksi; 
+        }
+        public function getTanggalBayar(): \DateTime { 
+            return $this->tanggalBayar; 
+        }
+        public function getJumlah(): string { 
+            return $this->jumlah; 
+        }
+        public function getMetode(): string { 
+            return $this->metode; 
+        }
+        public function getStatus(): string { 
+            return $this->status; 
+        }
 
-        public function setTransaksi(Transaksi $v)    { $this->transaksi    = $v; }
-        public function setTanggalBayar(\DateTime $v) { $this->tanggalBayar = $v; }
-        public function setJumlah(string $v)          { $this->jumlah       = $v; }
-        public function setMetode(string $v)          { $this->metode       = $v; }
-        public function setStatus(string $v)          { $this->status       = $v; }
+        public function setTransaksi(Transaksi $v) { 
+            $this->transaksi = $v; 
+        }
+        public function setTanggalBayar(\DateTime $v) { 
+            $this->tanggalBayar = $v; 
+        }
+        public function setJumlah(string $v) { 
+            $this->jumlah = $v; 
+        }
+        public function setMetode(string $v) { 
+            $this->metode = $v; 
+        }
+        public function setStatus(string $v) { 
+            $this->status = $v; 
+        }
 
-        public function toArray(): array
-        {
+        public function toArray(): array {
             return [
                 'id_pembayaran' => $this->id,
-                'id_transaksi'  => $this->transaksi->getId(),
+                'id_transaksi' => $this->transaksi->getId(),
                 'tanggal_bayar' => $this->tanggalBayar->format('Y-m-d'),
-                'jumlah'        => (float) $this->jumlah,
-                'metode_pembayaran'        => $this->metode,
-                'status'        => $this->status,
+                'jumlah' => (float) $this->jumlah,
+                'metode_pembayaran' => $this->metode,
+                'status' => $this->status,
             ];
         }
     }

@@ -3,10 +3,8 @@
 
     use App\Entity\Pelanggan;
 
-    class PelangganController extends BaseController
-    {
-        public function index(): void
-        {
+    class PelangganController extends BaseController {
+        public function index(): void {
             $this->auth();
             $data = array_map(
                 fn ($pelanggan) => $pelanggan->toArray(),
@@ -15,15 +13,13 @@
             $this->ok($data);
         }
 
-        public function show(int $id): void
-        {
+        public function show(int $id): void {
             $this->auth();
             $pelanggan = $this->em->find(Pelanggan::class, $id) ?? $this->fail('Tidak ditemukan', 404);
             $this->ok($pelanggan->toArray());
         }
 
-        public function store(): void
-        {
+        public function store(): void {
             $this->auth();
             $b = $this->body();
             $items = isset($b[0]) ? $b : [$b];
@@ -56,8 +52,7 @@
             $this->ok($result, count($result) . ' pelanggan ditambahkan', 201);
         }
 
-        public function update(int $id): void
-        {
+        public function update(int $id): void {
             $this->auth();
             $pelanggan = $this->em->find(Pelanggan::class, $id) ?? $this->fail('Tidak ditemukan', 404);
             $b = $this->body();
@@ -79,8 +74,7 @@
             $this->ok($pelanggan->toArray(), 'Pelanggan diupdate');
         }
 
-        public function delete(int $id): void
-        {
+        public function delete(int $id): void {
             $this->auth();
             $pelanggan = $this->em->find(Pelanggan::class, $id) ?? $this->fail('Tidak ditemukan', 404);
             $this->em->remove($pelanggan);

@@ -5,8 +5,7 @@
 
     #[ORM\Entity]
     #[ORM\Table(name: 'kendaraan')]
-    class Kendaraan
-    {
+    class Kendaraan {
         #[ORM\Id]
         #[ORM\GeneratedValue]
         #[ORM\Column(name: 'id_kendaraan', type: 'integer')]
@@ -27,28 +26,49 @@
         #[ORM\Column(name: 'status', type: 'string')]
         private string $status = 'tersedia';
 
-        public function getId(): ?int              { return $this->id; }
-        public function getNamaKendaraan(): string { return $this->namaKendaraan; }
-        public function getMerk(): string          { return $this->merk; }
-        public function getJenis(): string         { return $this->jenis; }
-        public function getHargaSewa(): string     { return $this->hargaSewa; }
-        public function getStatus(): string        { return $this->status; }
+        public function getId(): ?int { 
+            return $this->id; 
+        }
+        public function getNamaKendaraan(): string { 
+            return $this->namaKendaraan; 
+        }
+        public function getMerk(): string { 
+            return $this->merk; 
+        }
+        public function getJenis(): string { 
+            return $this->jenis; 
+        }
+        public function getHargaSewa(): string { 
+            return $this->hargaSewa; 
+        }
+        public function getStatus(): string { 
+            return $this->status; 
+        }
 
-        public function setNamaKendaraan(string $v): void { $this->namaKendaraan = $v; }
-        public function setMerk(string $v): void          { $this->merk          = $v; }
-        public function setJenis(string $v): void         { $this->jenis         = $v; }
-        public function setHargaSewa(string $v): void     { $this->hargaSewa     = $v; }
-        public function setStatus(string $v): void        { $this->status        = $v; }
+        public function setNamaKendaraan(string $v): void { 
+            $this->namaKendaraan = $v; 
+        }
+        public function setMerk(string $v): void { 
+            $this->merk = $v; 
+        }
+        public function setJenis(string $v): void { 
+            $this->jenis = $v; 
+        }
+        public function setHargaSewa(string $v): void { 
+            $this->hargaSewa = $v; 
+        }
+        public function setStatus(string $v): void { 
+            $this->status = $v; 
+        }
 
-        public function toArray(): array
-        {
+        public function toArray(): array {
             return [
-                'id_kendaraan'   => $this->id,
+                'id_kendaraan' => $this->id,
                 'nama_kendaraan' => $this->namaKendaraan,
-                'merk'           => $this->merk,
-                'jenis'          => $this->jenis,
-                'harga_sewa'     => (float) $this->hargaSewa,
-                'status'         => $this->status,
+                'merk' => $this->merk,
+                'jenis' => $this->jenis,
+                'harga_sewa' => (float) $this->hargaSewa,
+                'status' => $this->status,
             ];
         }
     }

@@ -4,10 +4,8 @@
     use App\Entity\Pembayaran;
     use App\Entity\Transaksi;
 
-    class PembayaranController extends BaseController
-    {
-        public function index(): void
-        {
+    class PembayaranController extends BaseController {
+        public function index(): void {
             $this->auth();
             $data = array_map(
                 fn ($pembayaran) => $pembayaran->toArray(),
@@ -16,15 +14,13 @@
             $this->ok($data);
         }
 
-        public function show(int $id): void
-        {
+        public function show(int $id): void {
             $this->auth();
             $pembayaran = $this->em->find(Pembayaran::class, $id) ?? $this->fail('Tidak ditemukan', 404);
             $this->ok($pembayaran->toArray());
         }
 
-        public function store(): void
-        {
+        public function store(): void {
             $this->auth();
             $b = $this->body();
             $items = isset($b[0]) ? $b : [$b];
@@ -48,17 +44,24 @@
                 $pembayaran->setMetode($item['metode_pembayaran']);
                 $pembayaran->setStatus('lunas');
 
+                // Setelah pembayaran, transaksi menunggu proses pengembalian
                 $transaksi->setStatus('menunggu_pengembalian');
 
+                // Hitung kembalian (lebih bayar)
+                $kembalian = (float) $item['jumlah'] - (float) $transaksi->getTotalHarga();
+
                 $this->em->persist($pembayaran);
-                $entities[] = $pembayaran;
+                $entities[] = ['pembayaran' => $pembayaran, 'kembalian' => $kembalian];
             }
 
             $this->em->flush();
             $result = [];
-            foreach ($entities as $pembayaran) {
+            foreach ($entities as $row) {
+                $pembayaran = $row['pembayaran'];
                 $this->em->refresh($pembayaran);
-                $result[] = $pembayaran->toArray();
+                $arr = $pembayaran->toArray();
+                $arr['kembalian'] = $row['kembalian'];
+                $result[] = $arr;
             }
 
             $this->ok($result, count($result) . ' pembayaran berhasil', 201);

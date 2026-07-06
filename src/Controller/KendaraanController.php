@@ -3,10 +3,8 @@
 
     use App\Entity\Kendaraan;
 
-    class KendaraanController extends BaseController
-    {
-        public function index(): void
-        {
+    class KendaraanController extends BaseController {
+        public function index(): void {
             $this->auth();
             $data = array_map(
                 fn ($kendaraan) => $kendaraan->toArray(),
@@ -15,15 +13,13 @@
             $this->ok($data);
         }
 
-        public function show(int $id): void
-        {
+        public function show(int $id): void {
             $this->auth();
             $kendaraan = $this->em->find(Kendaraan::class, $id) ?? $this->fail('Tidak ditemukan', 404);
             $this->ok($kendaraan->toArray());
         }
 
-        public function store(): void
-        {
+        public function store(): void {
             $this->adminOnly();
             $b = $this->body();
             $items = isset($b[0]) ? $b : [$b];
@@ -51,8 +47,7 @@
             $this->ok($result, count($result) . ' kendaraan ditambahkan', 201);
         }
 
-        public function update(int $id): void
-        {
+        public function update(int $id): void {
             $this->adminOnly();
             $kendaraan = $this->em->find(Kendaraan::class, $id) ?? $this->fail('Tidak ditemukan', 404);
             $b = $this->body();
@@ -77,8 +72,7 @@
             $this->ok($kendaraan->toArray(), 'Kendaraan diupdate');
         }
 
-        public function delete(int $id): void
-        {
+        public function delete(int $id): void {
             $this->adminOnly();
             $kendaraan = $this->em->find(Kendaraan::class, $id) ?? $this->fail('Tidak ditemukan', 404);
             if ($kendaraan->getStatus() === 'disewa') {
