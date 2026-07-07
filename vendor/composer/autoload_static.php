@@ -38,6 +38,11 @@ class ComposerStaticInitdaafa966dde1f03f497f2584de00644b
             'Psr\\Log\\' => 8,
             'Psr\\Container\\' => 14,
             'Psr\\Cache\\' => 10,
+            'PhpOption\\' => 10,
+        ),
+        'G' =>
+        array (
+            'GrahamCampbell\\ResultType\\' => 26,
         ),
         'F' =>
         array (
@@ -45,6 +50,7 @@ class ComposerStaticInitdaafa966dde1f03f497f2584de00644b
         ),
         'D' =>
         array (
+            'Dotenv\\' => 7,
             'Doctrine\\Persistence\\' => 21,
             'Doctrine\\ORM\\' => 13,
             'Doctrine\\Instantiator\\' => 22,
@@ -124,9 +130,21 @@ class ComposerStaticInitdaafa966dde1f03f497f2584de00644b
         array (
             0 => __DIR__ . '/..' . '/psr/cache/src',
         ),
+        'PhpOption\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
+        ),
+        'GrahamCampbell\\ResultType\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
+        ),
         'Firebase\\JWT\\' =>
         array (
             0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
+        ),
+        'Dotenv\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
         ),
         'Doctrine\\Persistence\\' =>
         array (
