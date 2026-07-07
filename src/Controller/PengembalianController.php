@@ -82,5 +82,32 @@
                 201
             );
         }
+
+        public function update(int $id): void {
+            $this->auth();
+            $pengembalian = $this->em->find(Pengembalian::class, $id) ?? $this->fail('Tidak ditemukan', 404);
+            $b = $this->body();
+
+            if (isset($b['id_transaksi'])) {
+                $transaksi = $this->em->find(Transaksi::class, $b['id_transaksi'])
+                    ?? $this->fail('Transaksi tidak ada', 404);
+                $pengembalian->setTransaksi($transaksi);
+            }
+            if (isset($b['tanggal_kembali'])) {
+                $pengembalian->setTanggalKembali(new \DateTime($b['tanggal_kembali']));
+            }
+            if (isset($b['kondisi_kendaraan'])) {
+                $pengembalian->setKondisiKendaraan($b['kondisi_kendaraan']);
+            }
+            if (array_key_exists('catatan', $b)) {
+                $pengembalian->setCatatan($b['catatan']);
+            }
+            if (isset($b['status'])) {
+                $pengembalian->setStatus($b['status']);
+            }
+
+            $this->em->flush();
+            $this->ok($pengembalian->toArray(), 'Pengembalian diupdate');
+        }
     }
 ?>

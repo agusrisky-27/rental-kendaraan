@@ -114,6 +114,10 @@
             (new PengembalianController($em))->store();
             return;
         }
+        if ($method === 'PUT' && preg_match('#^/api/pengembalian/(\d+)$#', $path, $m)) {
+            (new PengembalianController($em))->update((int) $m[1]);
+            return;
+        }
 
         // Pembayaran 
         if ($method === 'GET' && $path === '/api/pembayaran') {
@@ -126,6 +130,10 @@
         }
         if ($method === 'POST' && $path === '/api/pembayaran') {
             (new PembayaranController($em))->store();
+            return;
+        }
+        if ($method === 'PUT' && preg_match('#^/api/pembayaran/(\d+)$#', $path, $m)) {
+            (new PembayaranController($em))->update((int) $m[1]);
             return;
         }
 

@@ -66,5 +66,32 @@
 
             $this->ok($result, count($result) . ' pembayaran berhasil', 201);
         }
+
+        public function update(int $id): void {
+            $this->auth();
+            $pembayaran = $this->em->find(Pembayaran::class, $id) ?? $this->fail('Tidak ditemukan', 404);
+            $b = $this->body();
+
+            if (isset($b['id_transaksi'])) {
+                $transaksi = $this->em->find(Transaksi::class, $b['id_transaksi'])
+                    ?? $this->fail('Transaksi tidak ada', 404);
+                $pembayaran->setTransaksi($transaksi);
+            }
+            if (isset($b['tanggal_bayar'])) {
+                $pembayaran->setTanggalBayar(new \DateTime($b['tanggal_bayar']));
+            }
+            if (isset($b['jumlah'])) {
+                $pembayaran->setJumlah((string) $b['jumlah']);
+            }
+            if (isset($b['metode_pembayaran'])) {
+                $pembayaran->setMetode($b['metode_pembayaran']);
+            }
+            if (isset($b['status'])) {
+                $pembayaran->setStatus($b['status']);
+            }
+
+            $this->em->flush();
+            $this->ok($pembayaran->toArray(), 'Pembayaran diupdate');
+        }
     }
 ?>
