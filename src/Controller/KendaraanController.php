@@ -30,6 +30,7 @@
                 $kendaraan->setNamaKendaraan($item['nama_kendaraan']);
                 $kendaraan->setMerk($item['merk']);
                 $kendaraan->setJenis($item['jenis']);
+                $kendaraan->setPlatNomor(isset($item['plat_nomor']) ? (string) $item['plat_nomor'] : null);
                 $kendaraan->setHargaSewa((string) $item['harga_sewa']);
                 $kendaraan->setStatus('tersedia');
                 $this->em->persist($kendaraan);
@@ -60,6 +61,9 @@
             }
             if (isset($b['jenis'])) {
                 $kendaraan->setJenis($b['jenis']);
+            }
+            if (array_key_exists('plat_nomor', $b)) {
+                $kendaraan->setPlatNomor($b['plat_nomor'] === null ? null : (string) $b['plat_nomor']);
             }
             if (isset($b['harga_sewa'])) {
                 $kendaraan->setHargaSewa((string) $b['harga_sewa']);

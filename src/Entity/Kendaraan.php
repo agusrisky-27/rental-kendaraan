@@ -20,6 +20,9 @@
         #[ORM\Column(name: 'jenis', type: 'string')]
         private string $jenis;
 
+        #[ORM\Column(name: 'plat_nomor', type: 'string', length: 15, nullable: true)]
+        private ?string $platNomor = null;
+
         #[ORM\Column(name: 'harga_sewa', type: 'decimal', precision: 12, scale: 2)]
         private string $hargaSewa;
 
@@ -38,6 +41,9 @@
         public function getJenis(): string { 
             return $this->jenis; 
         }
+        public function getPlatNomor(): ?string { 
+            return $this->platNomor; 
+        }
         public function getHargaSewa(): string { 
             return $this->hargaSewa; 
         }
@@ -54,6 +60,9 @@
         public function setJenis(string $v): void { 
             $this->jenis = $v; 
         }
+        public function setPlatNomor(?string $v): void { 
+            $this->platNomor = $v; 
+        }
         public function setHargaSewa(string $v): void { 
             $this->hargaSewa = $v; 
         }
@@ -67,6 +76,7 @@
                 'nama_kendaraan' => $this->namaKendaraan,
                 'merk' => $this->merk,
                 'jenis' => $this->jenis,
+                'plat_nomor' => $this->platNomor,
                 'harga_sewa' => (float) $this->hargaSewa,
                 'status' => $this->status,
             ];
