@@ -100,6 +100,10 @@
             (new TransaksiController($em))->update((int) $m[1]);
             return;
         }
+        if ($method === 'DELETE' && preg_match('#^/api/transaksi/(\d+)$#', $path, $m)) {
+            (new TransaksiController($em))->delete((int) $m[1]);
+            return;
+        }
         if (($method === 'POST' || $method === 'PUT') && preg_match('#^/api/transaksi/(\d+)/kembalikan$#', $path, $m)) {
             (new TransaksiController($em))->returnVehicle((int) $m[1]);
             return;
@@ -118,6 +122,10 @@
             (new PengembalianController($em))->update((int) $m[1]);
             return;
         }
+        if ($method === 'DELETE' && preg_match('#^/api/pengembalian/(\d+)$#', $path, $m)) {
+            (new PengembalianController($em))->delete((int) $m[1]);
+            return;
+        }
 
         // Pembayaran 
         if ($method === 'GET' && $path === '/api/pembayaran') {
@@ -134,6 +142,10 @@
         }
         if ($method === 'PUT' && preg_match('#^/api/pembayaran/(\d+)$#', $path, $m)) {
             (new PembayaranController($em))->update((int) $m[1]);
+            return;
+        }
+        if ($method === 'DELETE' && preg_match('#^/api/pembayaran/(\d+)$#', $path, $m)) {
+            (new PembayaranController($em))->delete((int) $m[1]);
             return;
         }
 

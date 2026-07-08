@@ -109,5 +109,20 @@
             $this->em->flush();
             $this->ok($pengembalian->toArray(), 'Pengembalian diupdate');
         }
+
+        public function delete(int $id): void {
+            $this->auth();
+            $pengembalian = $this->em->find(Pengembalian::class, $id) ?? $this->fail('Tidak ditemukan', 404);
+
+            $transaksi = $pengembalian->getTransaksi();
+            if ($transaksi) {
+                $transaksi->setStatus('menunggu_pengembalian');
+                $transaksi->getKendaraan()->setStatus('disewa');
+            }
+
+            $this->em->remove($pengembalian);
+            $this->em->flush();
+            $this->ok(null, 'Pengembalian dihapus');
+        }
     }
 ?>

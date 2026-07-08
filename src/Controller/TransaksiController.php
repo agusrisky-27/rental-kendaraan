@@ -3,6 +3,8 @@
 
     use App\Entity\Kendaraan;
     use App\Entity\Pelanggan;
+    use App\Entity\Pembayaran;
+    use App\Entity\Pengembalian;
     use App\Entity\Transaksi;
     use App\Entity\User;
 
@@ -94,6 +96,16 @@
         public function delete(int $id): void {
             $this->auth();
             $transaksi = $this->em->find(Transaksi::class, $id) ?? $this->fail('Tidak ditemukan', 404);
+
+            $pembayaran = $this->em->getRepository(Pembayaran::class)->findOneBy(['transaksi' => $transaksi]);
+            if ($pembayaran) {
+                $this->em->remove($pembayaran);
+            }
+
+            $pengembalian = $this->em->getRepository(Pengembalian::class)->findOneBy(['transaksi' => $transaksi]);
+            if ($pengembalian) {
+                $this->em->remove($pengembalian);
+            }
 
             $transaksi->getKendaraan()->setStatus('tersedia');
             $this->em->remove($transaksi);

@@ -1,13 +1,17 @@
 <?php
-
     use Doctrine\ORM\EntityManager;
     use Doctrine\ORM\Tools\SchemaTool;
     use Doctrine\ORM\Tools\Setup;
 
     require_once __DIR__ . '/../vendor/autoload.php';
 
-    define('JWT_SECRET', 'rental_kendaraan_secret_key_itb_stikom_bali_2024');
-    define('JWT_EXPIRE', 86400);
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+    $dotenv->load();
+
+    $dotenv->required(['JWT_SECRET', 'JWT_EXPIRE', 'DB_HOST', 'DB_NAME', 'DB_USER']);
+
+    define('JWT_SECRET', $_ENV['JWT_SECRET']);
+    define('JWT_EXPIRE', (int) $_ENV['JWT_EXPIRE']); // cast ke int karena dari .env selalu string
 
     function getEM(): EntityManager {
         $proxyDir = __DIR__ . '/../proxies';
@@ -23,12 +27,12 @@
 
         $em = EntityManager::create(
             [
-                'driver' => 'pdo_mysql',
-                'host' => '127.0.0.1',
-                'dbname' => 'rental_kendaraan',
-                'user' => 'root',
-                'password' => '',
-                'charset' => 'utf8mb4',
+                'driver'   => 'pdo_mysql',
+                'host'     => $_ENV['DB_HOST'],  // baca dari .env
+                'dbname'   => $_ENV['DB_NAME'],  // baca dari .env
+                'user'     => $_ENV['DB_USER'],  // baca dari .env
+                'password' => $_ENV['DB_PASS'] ?? '', //dari inv
+                'charset'  => 'utf8mb4',
             ],
             $config
         );
@@ -44,15 +48,13 @@
                     $connection->executeStatement(
                         "CREATE TABLE IF NOT EXISTS pengembalian (
                             id_pengembalian INT AUTO_INCREMENT NOT NULL,
-                            id_transaksi INT NOT NULL,
+                            id_transaksi    INT NOT NULL,
                             tanggal_kembali DATE NOT NULL,
                             kondisi_kendaraan VARCHAR(255) NOT NULL,
-                            catatan LONGTEXT DEFAULT NULL,
-                            status VARCHAR(255) NOT NULL,
-                            PRIMARY KEY (id_pengembalian),
-                            INDEX IDX_pengembalian_transaksi (id_transaksi)
-                        ) 
-                        DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB"
+                            catatan         LONGTEXT DEFAULT NULL,
+                            status          VARCHAR(255) NOT NULL,
+                            PRIMARY KEY (id_pengembalian)
+                        ) ENGINE = InnoDB"
                     );
                 }
             }

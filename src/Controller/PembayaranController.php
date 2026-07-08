@@ -93,5 +93,19 @@
             $this->em->flush();
             $this->ok($pembayaran->toArray(), 'Pembayaran diupdate');
         }
+
+        public function delete(int $id): void {
+            $this->auth();
+            $pembayaran = $this->em->find(Pembayaran::class, $id) ?? $this->fail('Tidak ditemukan', 404);
+
+            $transaksi = $pembayaran->getTransaksi();
+            if ($transaksi && $transaksi->getStatus() === 'menunggu_pengembalian') {
+                $transaksi->setStatus('aktif');
+            }
+
+            $this->em->remove($pembayaran);
+            $this->em->flush();
+            $this->ok(null, 'Pembayaran dihapus');
+        }
     }
 ?>
