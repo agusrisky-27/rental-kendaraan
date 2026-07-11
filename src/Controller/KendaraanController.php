@@ -26,6 +26,14 @@
 
             $entities = [];
             foreach ($items as $item) {
+                // Validasi platnomor tidak duplikat
+                if (isset($item['plat_nomor']) && $item['plat_nomor']) {
+                    $existing = $this->em->getRepository(Kendaraan::class)->findOneBy(['platNomor' => (string) $item['plat_nomor']]);
+                    if ($existing) {
+                        $this->fail('Platnomor ' . $item['plat_nomor'] . ' sudah ada', 409);
+                    }
+                }
+
                 $kendaraan = new Kendaraan();
                 $kendaraan->setNamaKendaraan($item['nama_kendaraan']);
                 $kendaraan->setMerk($item['merk']);
@@ -52,6 +60,14 @@
             $this->adminOnly();
             $kendaraan = $this->em->find(Kendaraan::class, $id) ?? $this->fail('Tidak ditemukan', 404);
             $b = $this->body();
+
+            // Validasi platnomor tidak duplikat saat update
+            if (array_key_exists('plat_nomor', $b) && $b['plat_nomor']) {
+                $existing = $this->em->getRepository(Kendaraan::class)->findOneBy(['platNomor' => (string) $b['plat_nomor']]);
+                if ($existing && $existing->getIdKendaraan() !== $id) {
+                    $this->fail('Platnomor ' . $b['plat_nomor'] . ' sudah ada', 409);
+                }
+            }
 
             if (isset($b['nama_kendaraan'])) {
                 $kendaraan->setNamaKendaraan($b['nama_kendaraan']);

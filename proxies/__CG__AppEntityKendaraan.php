@@ -67,10 +67,10 @@ class Kendaraan extends \App\Entity\Kendaraan implements \Doctrine\ORM\Proxy\Pro
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'namaKendaraan', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'merk', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'jenis', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'hargaSewa', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'status'];
+            return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'namaKendaraan', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'merk', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'jenis', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'platNomor', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'hargaSewa', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'status'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'namaKendaraan', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'merk', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'jenis', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'hargaSewa', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'status'];
+        return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'namaKendaraan', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'merk', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'jenis', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'platNomor', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'hargaSewa', '' . "\0" . 'App\\Entity\\Kendaraan' . "\0" . 'status'];
     }
 
     /**
@@ -228,6 +228,17 @@ class Kendaraan extends \App\Entity\Kendaraan implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
+    public function getPlatNomor(): ?string
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPlatNomor', []);
+
+        return parent::getPlatNomor();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getHargaSewa(): string
     {
 
@@ -278,6 +289,17 @@ class Kendaraan extends \App\Entity\Kendaraan implements \Doctrine\ORM\Proxy\Pro
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setJenis', [$v]);
 
         parent::setJenis($v);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setPlatNomor(?string $v): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPlatNomor', [$v]);
+
+        parent::setPlatNomor($v);
     }
 
     /**
